@@ -1,0 +1,78 @@
+# Import Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load Dataset
+df = pd.read_csv('accidents.csv')
+
+# Display first 5 rows
+print(df.head())
+
+# Dataset Information
+print(df.info())
+
+# Check Missing Values
+print(df.isnull().sum())
+
+# Remove Missing Values
+df = df.dropna()
+
+# -----------------------------
+# Accidents by Weather Condition
+# -----------------------------
+plt.figure(figsize=(8,5))
+sns.countplot(data=df, x='Weather_Condition')
+plt.title('Accidents by Weather Condition')
+plt.xticks(rotation=45)
+plt.show()
+
+# -----------------------------
+# Accidents by Road Condition
+# -----------------------------
+plt.figure(figsize=(8,5))
+sns.countplot(data=df, x='Road_Condition')
+plt.title('Accidents by Road Condition')
+plt.xticks(rotation=45)
+plt.show()
+
+# -----------------------------
+# Accidents by Time of Day
+# -----------------------------
+df['Hour'] = pd.to_datetime(df['Time']).dt.hour
+
+plt.figure(figsize=(10,5))
+sns.histplot(df['Hour'], bins=24)
+plt.title('Accidents by Hour of Day')
+plt.xlabel('Hour')
+plt.ylabel('Number of Accidents')
+plt.show()
+
+# -----------------------------
+# Accident Hotspots
+# -----------------------------
+plt.figure(figsize=(10,6))
+sns.scatterplot(data=df,
+                x='Longitude',
+                y='Latitude',
+                alpha=0.5)
+
+plt.title('Accident Hotspots')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.show()
+
+# -----------------------------
+# Correlation Analysis
+# -----------------------------
+numeric_df = df.select_dtypes(include=['number'])
+
+plt.figure(figsize=(8,6))
+sns.heatmap(numeric_df.corr(),
+            annot=True,
+            cmap='coolwarm')
+
+plt.title('Correlation Matrix')
+plt.show()
+
+print("Traffic Accident Analysis Completed Successfully")

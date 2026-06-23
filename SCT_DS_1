@@ -1,0 +1,26 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample Dataset
+data = {
+    'Age_Group': ['0-20 Years', '21-64 Years', '65+ Years'],
+    'Population_Million': [512, 807, 98]
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Create Bar Chart
+plt.figure(figsize=(8, 5))
+plt.bar(df['Age_Group'], df['Population_Million'])
+
+# Labels and Title
+plt.title("India's Population Distribution by Age (2022)")
+plt.xlabel("Age Group")
+plt.ylabel("Population (Million)")
+
+# Show Values on Bars
+for i, value in enumerate(df['Population_Million']):
+    plt.text(i, value + 10, str(value), ha='center')
+
+plt.show()
